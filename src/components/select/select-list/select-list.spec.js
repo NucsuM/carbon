@@ -11,6 +11,7 @@ import Portal from "../../portal";
 import ListActionButton from "../list-action-button/list-action-button.component";
 import Loader from "../../loader";
 import { assertStyleMatch } from "../../../__spec_helper__/test-utils";
+import StyledSelectListContainer from "./select-list-container.style";
 
 const escapeKeyDownEvent = new KeyboardEvent("keydown", {
   key: "Escape",
@@ -393,7 +394,7 @@ describe("SelectList", () => {
   });
 
   describe("when the children changes in the list", () => {
-    it("height should be set to expected value", () => {
+    it("container height should be set to expected value", () => {
       const testWrapper = document.createElement("div");
       const wrapper = mount(
         getSelectList({
@@ -403,7 +404,7 @@ describe("SelectList", () => {
       );
       const listElement = wrapper.find(StyledSelectList).getDOMNode();
       jest
-        .spyOn(listElement, "scrollHeight", "get")
+        .spyOn(listElement, "clientHeight", "get")
         .mockImplementation(() => 100);
       wrapper
         .setProps({
@@ -416,7 +417,11 @@ describe("SelectList", () => {
           ],
         })
         .update();
-      assertStyleMatch({ height: "100px" }, wrapper.find(StyledSelectList));
+      assertStyleMatch(
+        { height: "100px" },
+        wrapper.find(StyledSelectListContainer)
+      );
+      wrapper.detach();
     });
   });
 
@@ -473,6 +478,45 @@ describe("SelectList", () => {
           });
           expect(onSelectFn).toHaveBeenCalledWith(expectedSelectValue);
         });
+      });
+    });
+
+    describe("and the children changes in the list", () => {
+      it("container height should be set to expected value", () => {
+        const testWrapper = document.createElement("div");
+        const wrapper = mount(
+          getSelectList({
+            listActionButton: true,
+            onListAction: () => {},
+          }),
+          { attachTo: testWrapper }
+        );
+        const listElement = wrapper.find(StyledSelectList).getDOMNode();
+        const listActionButtonElement = wrapper
+          .find(ListActionButton)
+          .getDOMNode();
+        jest
+          .spyOn(listElement, "clientHeight", "get")
+          .mockImplementation(() => 100);
+        jest
+          .spyOn(listActionButtonElement, "clientHeight", "get")
+          .mockImplementation(() => 50);
+        wrapper
+          .setProps({
+            children: [
+              <Option value="opt1" text="red" />,
+              <Option value="opt2" text="green" />,
+              <Option value="opt3" text="blue" />,
+              <Option value="opt4" text="white" />,
+              <Option value="opt5" text="yellow" />,
+            ],
+          })
+          .update();
+        assertStyleMatch(
+          { height: "150px" },
+          wrapper.find(StyledSelectListContainer)
+        );
+        wrapper.detach();
       });
     });
   });
