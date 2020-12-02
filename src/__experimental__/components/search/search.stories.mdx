@@ -110,12 +110,16 @@ In this example the `variant` prop is "dark" and `searchButton` is true.
 
 <Preview style={{ backgroundColor: "#003349"}}>
   <Story name="with Alt Styling" parameters={{ info: { disable: true }}}>
-    <Search 
-      placeholder="Search..." 
-      defaultValue="Search" 
-      searchButton
-      variant="dark"
-    />
+    <Box width="700px" height="75px" bg="#003349">
+      <div style={{padding: "32px", backgroundColor: "#003349"}}>
+        <Search 
+          placeholder="Search..." 
+          defaultValue="Search" 
+          searchButton
+          variant="dark"
+        />
+      </div>
+    </Box>
   </Story>
 </Preview>
 
@@ -124,11 +128,15 @@ In this example the `variant` prop is "dark" and no search button is present.
 
 <Preview style={{ backgroundColor: "#003349"}}>
   <Story name="with Alt Styling and no button" parameters={{ info: { disable: true }}}>
-    <Search 
-      placeholder="Search..." 
-      defaultValue="" 
-      variant="dark"
-    />
+    <Box width="700px" height="75px" bg="#003349">
+      <div style={{padding: "32px", backgroundColor: "#003349"}}>
+        <Search 
+          placeholder="Search..." 
+          defaultValue="" 
+          variant="dark"
+        />
+      </div>
+    </Box>
   </Story>
 </Preview>
 
