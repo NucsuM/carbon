@@ -28,7 +28,6 @@ const Sort = ({ children, onClick, sortType }) => {
         tabIndex={0}
         onClick={onClick}
         sortType={sortType}
-        aria-describedby={id.current}
         aria-labelledby={id.current}
       >
         {children}
